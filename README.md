@@ -2,6 +2,10 @@
 
 # Objectius
 
+- Funcionament del React
+- Vulnerabilitats de React en general
+- Vulnerabilitats de React Native
+
 # Introducció
 
 Per poder parlar sobre vulnerabilitats sobre un sistema és imprescindible conèixer com funciona aquest sistema. Per aquest motiu abans d'entrar en detalls sobre possibles errades de seguretat crec convenient explicar les bases del funcionament de una aplicació react. 
