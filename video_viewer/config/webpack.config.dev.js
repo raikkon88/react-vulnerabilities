@@ -191,7 +191,11 @@ module.exports = {
             loader: require.resolve('eslint-loader'),
           },
         ],
-        include: paths.appSrc,
+        include: [ 
+          paths.appSrc,
+          `${paths.appNodeModules}/react-native-elements`,
+          `${paths.appNodeModules}/react-native-vector-icons`
+        ]
       },
       {
         // "oneOf" will traverse all following loaders until one will
