@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import {
-  Text,
-  View,
   Platform,
 } from 'react-native';
 import VideoList from './Screens/VideoList'
 import Video from './Screens/Video'
-import logo from './logo.png';
 import axios from 'axios';
 import { Route, Router, Switch } from './Utils/Routing';
 

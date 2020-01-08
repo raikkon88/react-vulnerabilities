@@ -3,7 +3,6 @@ import {
   Text,
   View,
   FlatList,
-  Platform,
 } from 'react-native';
 import axios from 'axios';
 import VideoListItem from '../Items/VideoListItem'
@@ -49,6 +48,7 @@ class VideoList extends Component {
     render(){
         return (
             <View>
+                <Text>The video list</Text>
                 <FlatList
                     data={this.state.videos}
                     renderItem={({item}) => (

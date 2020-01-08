@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Text,
-  View,
-  Platform,
+  Text
 } from 'react-native';
 class Video extends Component {
     render(){
