@@ -35,7 +35,7 @@ Npm [2] és el gestor de paquets per excel·lència de javascript. Aquí s'hi po
 
 ## Patró principal del llenguatge de programació. 
 
-React es basa en el patró de disseny desenvolupament anomenat composite [3]. Aquest patró es basa en l'anomenat divideix i venç, la idea principal és dividir les funcionalitats més bàsiques i aïllables en mòduls que a la seva vegada son utilitzats per altres mòduls que els componen. Així doncs es genera un arbre de dependències molt clar peró a la vegada perillós. Aquest concepte és clau a l'hora de parlar dels objectes importants i les seves característiques que poden fer-los vulnerables. 
+React es basa en el patró de desenvolupament anomenat composite [3]. Aquest patró pren com estandard l'anomenat divideix i venç, la idea principal és dividir les funcionalitats més bàsiques i aïllables en mòduls que a la seva vegada son utilitzats per altres mòduls que els componen. Així doncs, es genera un arbre de dependències molt clar peró a la vegada perillós. Aquest concepte és clau a l'hora de parlar dels objectes importants i les seves característiques que poden fer-los vulnerables. 
 
 ![Composite pattern diagram](./img/composite_pattern.png){ width=350px}
 
@@ -65,9 +65,9 @@ L'espai de memòria destinat a fer perdurar aquestes dades que ha recuperat dins
 
 ### Props
 
-Cada component per poder funcionar requereix de paràmetres, com a mínim requereix el paràmetre estat generat per el component pare App(), punt d'entrada de l'aplicació. Les props es defineixen com un objecte json, quan el component pare les reb s'inicialitzen i tot seguit, per cada component intern se li assignen aquestes props. Tots els components tenen el mateix comportament i per tant les props acaben viatjant des de la part superior de l'arbre fins a les fulles. 
+Cada component per poder funcionar requereix de paràmetres, com a mínim requereix el paràmetre estat generat per el component pare App(), punt d'entrada de l'aplicació. Aquests paràmetres s'anomenen props i es defineixen com un objecte json, quan el component pare les reb s'inicialitzen i tot seguit, per cada component intern se li assignen aquestes props. Tots els components tenen el mateix comportament i per tant les props acaben viatjant des de la part superior de l'arbre fins a les fulles. 
 
-A l'objecte props s'hi poden assignar tant valors, com altres objectes, com funcions. Aquesta és una de les virtuts del Javascript, i és que permet la creació molt fàcil de funcions d'ordre superior. El fet que desenvolupar sigui fàcil degut a aquestes característiques no treu que també és un punt dèbil a l'hora de pensar en la seguretat del sistema.
+A l'objecte props s'hi poden assignar tant valors, com altres objectes, com funcions. Aquesta és una de les virtuds del Javascript, i és que permet la creació de funcions d'ordre superior. En general s'utilitza la tècnica de single source of truth [6] que permet tenir molts components que estan compartint un únic estat. 
 
 ### Lifecycle
 
@@ -81,15 +81,35 @@ La funció render és la més important, ja que és on s'executa el codi JSX [5]
 
 # Vulnerabilitats 
 
-Tenint en compte que ara ja sabem com actúa react, ja podem parlar més concretament de vulnerabilitats lligades a aquest sistema. Es parlarà de vulnerabilitats de react, aquestes vulnerabilitats no només estan subjectes a aplicacions web sinó també a les aplicacions react-native. Per definició, react deixa poques portes obertes, però per molt consistent i seguir que es vulgui crear un software, quan passa per les mans dels programadors, sempre té possibilitats de tornar-se insegur. El bad coding és un fet. 
+Tenint en compte que ara ja sabem com actúa react, ja podem parlar més concretament de vulnerabilitats lligades a aquest sistema. Aquestes vulnerabilitats no només estan subjectes a aplicacions web sinó també a les aplicacions react-native. Per definició, react deixa poques portes obertes, però per molt consistent i seguir que es vulgui crear un software, quan passa per les mans dels programadors, sempre té possibilitats de tornar-se insegur. El bad coding és un fet. 
+
+Hi ha diferents punts a tenir en compte quan es parla de vulnerabilitats del react, en general ens centrarem en react-native ja que és el target del treball. El react native no només serveix per implementar o desenvolupar aplicacions mòbil, sinó que també serveix per implementar aplicacions web, és per aquest motiu pel que pot ser que alguna de les vulnerabilitats explicades a continuació afecti directament al món web. 
+
+## Redux
+
+Redux és un component molt important al parlar de react, de fet és la part que controla l'estat de l'aplicació i en conseqüència, qui controla els accessos a memòria i qui fa de pont entre els objectes i els seus valors amb els components que es renderitzen. 
+
+Podem consultar els issues de redux aquí : [https://snyk.io/vuln/npm:redux](https://snyk.io/vuln/npm:redux). 
+
+Com podem veure en l'anterior link redux no ha tingut cap issue de seguretat des de la seva creació, cosa que no significa que no en tingui, sinó que significa que ningú n'ha descobert. Aquest és un punt a favor de react natiu. Si es vol saber més informació sobre com funciona redux es pot visitar la seva documentació oficial [7] o llegir aquest artícle [https://blog.usejournal.com/how-does-redux-work-b1cce46d4fa6](https://blog.usejournal.com/how-does-redux-work-b1cce46d4fa6).
+
+## XSS 
+
+Tal com s'ha comentat anteriorment react native també està pensat per desenvolupar aplicacions web i per tant farem un petit incís sobre el cross site scripting. Amb react natiu estem molt protegits contra el clàssic XSS. Totes les possibles combinacions de caràcters que puguin ser entrats en un formulari, react les té en compte i les escapa i les tracta com ha de tractar-les. De fet té tota la coherència del món ja que és un llenguatge que està dissenyat per a interfícies. 
+
+Peró se li escapa quelcom important! Ja no parlem del típic XSS que en web sinó un XSS adaptat a react. I és que, si sabem que redera de una app hi ha react podem actuar diferent. 
+
+
+
 
 - FONT : https://medium.com/dailyjs/exploiting-script-injection-flaws-in-reactjs-883fb1fe36c1
 - Mirar les vulnerabilitats de components de npm
 - Mirar vulnerabilitats de l'estat vers la programació (boolean variables per amagar apartats que no hauria de veure, mala programació) 
-- Mirar vulnerabilitats de redux -> https://snyk.io/vuln/npm:redux
 - XSS -> http://danlec.com/blog/xss-via-a-spoofed-react-element
 - Denial of service : https://snyk.io/test/github/facebook/react-native?tab=issues
 - Getting data from cache : https://stackoverflow.com/questions/9916829/how-do-i-view-android-application-specific-cache
+
+- 3 Security Pitfalls Every React Developer Should Know -> https://medium.com/javascript-in-plain-english/3-security-pitfalls-every-react-developer-should-know-c04715b876b5
 
 # Conclusions
 
@@ -100,3 +120,6 @@ Tenint en compte que ara ja sabem com actúa react, ja podem parlar més concret
 - [3] - [Composite pattern] -> [https://es.wikipedia.org/wiki/Composite_(patr%C3%B3n_de_dise%C3%B1o)](https://es.wikipedia.org/wiki/Composite_(patr%C3%B3n_de_dise%C3%B1o))
 - [4] - [Redux] -> [https://es.redux.js.org/](https://es.redux.js.org/)
 - [5] - [JSX] -> [https://es.reactjs.org/docs/introducing-jsx.html](https://es.reactjs.org/docs/introducing-jsx.html)
+- [6] - [Single source of truth] -> [http://www.hackingwithreact.com/read/1/12/state-and-the-single-source-of-truth](http://www.hackingwithreact.com/read/1/12/state-and-the-single-source-of-truth)
+- [7] - [Redux Documentation](https://redux.js.org/introduction/getting-started)
+- [8] - [XSS over REACT](http://danlec.com/blog/xss-via-a-spoofed-react-element)
